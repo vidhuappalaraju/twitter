@@ -50,6 +50,16 @@ class APIManager: SessionManager {
         }
     }
     
+     func logout() {
+        // 1. Clear current user
+        User.current = nil
+        
+        // TODO: 2. Deauthorize OAuth tokens
+        
+        // 3. Post logout notification
+        NotificationCenter.default.post(name: NSNotification.Name("didLogout"), object: nil)
+    }
+    
 
     func getCurrentAccount(completion: @escaping (User?, Error?) -> ()) {
         request(URL(string: "https://api.twitter.com/1.1/account/verify_credentials.json")!)
@@ -112,8 +122,35 @@ class APIManager: SessionManager {
     
     // MARK: TODO: Favorite a Tweet
     
-    // MARK: TODO: Un-Favorite a Tweet
+    func favorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
+        let urlString = "https://api.twitter.com/1.1/favorites/create.json"
+        let parameters = ["id": tweet.id]
+        request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+            if response.result.isSuccess,
+                let tweetDictionary = response.result.value as? [String: Any] {
+                let tweet = Tweet(dictionary: tweetDictionary)
+                completion(tweet, nil)
+            } else {
+                completion(nil, response.result.error)
+            }
+        }
+    }
+   
     
+    // MARK: TODO: Un-Favorite a Tweet
+    func unfavorite(_ tweet: Tweet, completion: @escaping (Tweet?, Error?) -> ()) {
+        let urlString = "https://api.twitter.com/1.1/favorites/destroy.json"
+        let parameters = ["id": tweet.id]
+        request(urlString, method: .post, parameters: parameters, encoding: URLEncoding.queryString).validate().responseJSON { (response) in
+            if response.result.isSuccess,
+                let tweetDictionary = response.result.value as? [String: Any] {
+                let tweet = Tweet(dictionary: tweetDictionary)
+                completion(tweet, nil)
+            } else {
+                completion(nil, response.result.error)
+            }
+        }
+    }
     // MARK: TODO: Retweet
     
     // MARK: TODO: Un-Retweet
