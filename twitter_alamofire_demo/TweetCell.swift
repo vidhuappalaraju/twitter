@@ -65,6 +65,9 @@ class TweetCell: UITableViewCell {
                     print("Successfully unfavorited the following Tweet: \n\(tweet.text)")
                     tweet.favorited = false
                     tweet.favoriteCount! -= 1
+                    self.tweet = tweet
+                    //self.tweetFavButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: .normal)
+                   // self.tweetFavoriteCount.text = String(tweet.favoriteCount!)
                 }
             }
         }
@@ -76,10 +79,14 @@ class TweetCell: UITableViewCell {
                     print("Successfully favorited the following Tweet: \n\(tweet.text)")
                     tweet.favorited = true
                     tweet.favoriteCount! += 1
+                    self.tweet = tweet
+                   // self.tweetFavButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
+                   // self.tweetFavoriteCount.text = String(tweet.favoriteCount!)
                 }
             }
         }
-        self.refreshData()
+        
+        //self.refreshData()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
