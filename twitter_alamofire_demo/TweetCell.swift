@@ -18,7 +18,7 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var tweetPicture: UIImageView!
     @IBOutlet weak var tweetFavoriteCount: UILabel!
     @IBOutlet weak var tweetFavButton: UIButton!
-    
+    var parentView : TimelineViewController?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -85,8 +85,7 @@ class TweetCell: UITableViewCell {
                 }
             }
         }
-        
-        //self.refreshData()
+        self.parentView?.fetchTweets()
     }
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
