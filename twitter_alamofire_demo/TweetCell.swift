@@ -66,8 +66,6 @@ class TweetCell: UITableViewCell {
                     tweet.favorited = false
                     tweet.favoriteCount! -= 1
                     self.tweet = tweet
-                    //self.tweetFavButton.setImage(#imageLiteral(resourceName: "favor-icon"), for: .normal)
-                   // self.tweetFavoriteCount.text = String(tweet.favoriteCount!)
                 }
             }
         }
@@ -80,8 +78,6 @@ class TweetCell: UITableViewCell {
                     tweet.favorited = true
                     tweet.favoriteCount! += 1
                     self.tweet = tweet
-                   // self.tweetFavButton.setImage(#imageLiteral(resourceName: "favor-icon-red"), for: .normal)
-                   // self.tweetFavoriteCount.text = String(tweet.favoriteCount!)
                 }
             }
         }
